@@ -33,7 +33,7 @@ function RelatedLinks({ intl }) {
       <h3 className="h4">{intl.formatMessage(messages.relatedLinks)}</h3>
       <ul className="pl-4">
         <li>
-          <Hyperlink destination={`${getConfig().LMS_BASE_URL}/courses/${courseId}/dates`} onClick={() => logLinkClicked('dates')}>
+          <Hyperlink destination={`/course/${courseId}/dates`} onClick={() => logLinkClicked('dates')}>
             {intl.formatMessage(messages.datesCardLink)}
           </Hyperlink>
           <p>{intl.formatMessage(messages.datesCardDescription)}</p>

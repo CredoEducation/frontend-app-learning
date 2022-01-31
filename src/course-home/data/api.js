@@ -201,10 +201,6 @@ export async function getDatesTabData(courseId) {
     return camelCaseObject(data);
   } catch (error) {
     const { httpErrorStatus } = error && error.customAttributes;
-    if (httpErrorStatus === 404) {
-      global.location.replace(`${getConfig().LMS_BASE_URL}/courses/${courseId}/dates`);
-      return {};
-    }
     if (httpErrorStatus === 401) {
       // The backend sends this for unenrolled and unauthenticated learners, but we handle those cases by examining
       // courseAccess in the metadata call, so just ignore this status for now.
