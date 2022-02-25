@@ -23,6 +23,8 @@ import SequenceContent from './SequenceContent';
 /** [MM-P2P] Experiment */
 import { isMobile } from '../../../experiments/mm-p2p/utils';
 import { MMP2PFlyover, MMP2PFlyoverMobile } from '../../../experiments/mm-p2p';
+import { BadgesModal } from '../../../custom/badges/modal';
+import { useBadgesModalProps } from '../../../custom/badges/utils';
 
 function Sequence({
   unitId,
@@ -34,6 +36,10 @@ function Sequence({
   intl,
   mmp2p,
 }) {
+  const {
+    badgesModalIsOpen, closeBadgesModalFn, badgeLoadingStatus, badgeData,
+  } = useBadgesModalProps(courseId, sequenceId);
+
   const course = useModel('coursewareMeta', courseId);
   const sequence = useModel('sequences', sequenceId);
   const unit = useModel('units', unitId);
@@ -204,6 +210,13 @@ function Sequence({
           )}
         </div>
         <CourseLicense license={course.license || undefined} />
+        {badgesModalIsOpen && (
+        <BadgesModal
+          onClose={closeBadgesModalFn}
+          badgeLoadingStatus={badgeLoadingStatus}
+          data={badgeData}
+        />
+        )}
       </div>
     );
   }
