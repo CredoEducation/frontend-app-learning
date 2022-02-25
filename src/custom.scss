@@ -1,0 +1,73 @@
+.modal-badges {
+  height: 100%;
+  max-width: 50%;
+
+  // I don't like this.  We need to set a height of 100% on a div created by react-focus-on, a
+  // package we use in our Modal.  That div has no class name or ID, so instead we're uniquely
+  // identifying it by based on a unique attribute it has which its siblings don't share.
+  > div[data-focus-lock-disabled=false] {
+    height: 100%;
+  }
+
+  // Along with setting the height of modal-content's parent div from react-focus-on, we need to
+  // set modal-content's height as well to get the modal to expand to full-screen height.
+  .modal-content {
+    height: 100%;
+  }
+
+  .badge-block {
+    text-align: left;
+    padding: 0px 15px 25px 15px;
+
+    .badge-main-block {
+      width: 100%;
+    }
+
+    .badge-issuer-logo {
+      text-align: center;
+      height: 40px;
+    }
+
+    .badge-congrat {
+      text-align: center;
+      font-size: 36px;
+    }
+
+    .badge-title {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .badge-title,
+    .badge-img {
+      text-align: center;
+    }
+
+    .badge-issued-by-txt {
+      font-weight: 600;
+      padding-bottom: 15px;
+    }
+
+    .badge-congrat,
+    .badge-img,
+    .badge-title,
+    .badge-description,
+    .badge-issuer-info,
+    .badge-buttons,
+    .badge-notification {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+
+    .badge-loading {
+      font-size: 18px;
+      height: 400px;
+    }
+
+    .badge-btn-go-to-account:hover {
+      background-color: #065683;
+      background-image: none;
+      box-shadow: none;
+    }
+  }
+}
