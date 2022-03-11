@@ -1,4 +1,5 @@
 import { logError, logInfo } from '@edx/frontend-platform/logging';
+import { getConfig } from '@edx/frontend-platform';
 import { getCourseHomeCourseMetadata } from '../../course-home/data/api';
 import {
   addModel, addModelsMap, updateModel, updateModels, updateModelsMap,
@@ -114,11 +115,20 @@ export function fetchCourse(courseId) {
   };
 }
 
+const redirectUserToProfileFieldsForm = (profileFieldsUrl) => {
+  const newUrl = `${getConfig().LMS_BASE_URL}${profileFieldsUrl}?next=${encodeURIComponent(global.location.href)}`;
+  window.location.href = newUrl;
+};
+
 export function fetchSequence(sequenceId) {
   return async (dispatch) => {
     dispatch(fetchSequenceRequest({ sequenceId }));
     try {
       const { sequence, units } = await getSequenceMetadata(sequenceId);
+      if (sequence.userMustFillAdditionalProfileFields) {
+        redirectUserToProfileFieldsForm(sequence.profileFieldsUrl);
+        return;
+      }
       if (sequence.blockType !== 'sequential') {
         // Some other block types (particularly 'chapter') can be returned
         // by this API. We want to error in that case, since downstream
