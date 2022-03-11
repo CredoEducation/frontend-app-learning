@@ -184,6 +184,8 @@ function normalizeSequenceMetadata(sequence) {
       activeUnitIndex: sequence.position ? sequence.position - 1 : 0,
       saveUnitPosition: sequence.save_position,
       showCompletion: sequence.show_completion,
+      userMustFillAdditionalProfileFields: sequence.user_must_fill_additional_profile_fields,
+      profileFieldsUrl: sequence.profile_fields_url,
     },
     units: sequence.items.map(unit => ({
       id: unit.id,
