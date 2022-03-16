@@ -185,6 +185,7 @@ function normalizeSequenceMetadata(sequence) {
       saveUnitPosition: sequence.save_position,
       showCompletion: sequence.show_completion,
       userMustFillAdditionalProfileFields: sequence.user_must_fill_additional_profile_fields,
+      showSummaryInfoAfterQuiz: sequence.show_summary_info_after_quiz,
       profileFieldsUrl: sequence.profile_fields_url,
     },
     units: sequence.items.map(unit => ({

@@ -25,6 +25,8 @@ import { isMobile } from '../../../experiments/mm-p2p/utils';
 import { MMP2PFlyover, MMP2PFlyoverMobile } from '../../../experiments/mm-p2p';
 import { BadgesModal } from '../../../custom/badges/modal';
 import { useBadgesModalProps } from '../../../custom/badges/utils';
+import { ScoresModal } from '../../../custom/scores/modal';
+import { useScoresModalProps } from '../../../custom/scores/utils';
 
 function Sequence({
   unitId,
@@ -44,6 +46,13 @@ function Sequence({
   const sequence = useModel('sequences', sequenceId);
   const unit = useModel('units', unitId);
   const sequenceStatus = useSelector(state => state.courseware.sequenceStatus);
+
+  const {
+    scoresPanelDisplay, displayScoresModalWindowFn, scoresModalIsOpen, closeScoresModalFn,
+    scoresLoadingStatus, scoresData, userEmail, emailSendingStatus, emailSendingError,
+    userEmailChangeFn, sendScoresEmailFn
+  } = useScoresModalProps(courseId, sequenceId, sequence);
+
   const handleNext = () => {
     const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
     if (nextIndex < sequence.unitIds.length) {
@@ -150,6 +159,25 @@ function Sequence({
   if (sequenceStatus === 'loaded') {
     return (
       <div>
+        {scoresPanelDisplay && (
+        <div className="scores-panel">
+          <div className="container-fluid py-3 d-md-flex justify-content-end align-items-start">
+            <div className="align-items-center flex-grow-1 d-md-flex mx-1 my-1">
+              <div className="flex-grow-1">
+                <div className="row">
+                  <span className="col-auto col-form-label pl-3">Click here to see details and email your score:</span>
+                  <a
+                    className="btn btn-inverse-outline-primary"
+                    href="#"
+                    onClick={displayScoresModalWindowFn}
+                  >Get Scores
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        )}
         <div className="sequence-container" style={{ display: 'inline-flex', flexDirection: 'row' }}>
           <div className="sequence" style={{ width: '100%' }}>
             <SequenceNavigation
@@ -215,6 +243,18 @@ function Sequence({
           onClose={closeBadgesModalFn}
           badgeLoadingStatus={badgeLoadingStatus}
           data={badgeData}
+        />
+        )}
+        {scoresModalIsOpen && (
+        <ScoresModal
+          onClose={closeScoresModalFn}
+          scoresLoadingStatus={scoresLoadingStatus}
+          data={scoresData}
+          userEmail={userEmail}
+          emailSendingStatus={emailSendingStatus}
+          emailSendingError={emailSendingError}
+          userEmailChangeFn={userEmailChangeFn}
+          sendScoresEmailFn={sendScoresEmailFn}
         />
         )}
       </div>
