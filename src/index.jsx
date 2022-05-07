@@ -115,6 +115,7 @@ initialize({
         TWITTER_HASHTAG: process.env.TWITTER_HASHTAG || null,
         TWITTER_URL: process.env.TWITTER_URL || null,
         LEGACY_THEME_NAME: process.env.LEGACY_THEME_NAME || null,
+        FOOTER_LINKS: process.env.FOOTER_LINKS || null,
       }, 'LearnerAppConfig');
     },
   },
