@@ -10,7 +10,7 @@ export function BadgesModal({ onClose, badgeLoadingStatus, data }) {
           <div className="badge-block" id="badge-block">
             <div className="badge-main-block">
               {badgeLoadingStatus === 'loading' && <div className="badge-loading">Please wait while we grab your badge!</div>}
-              {badgeLoadingStatus === 'error' && <div className="badge-loading">Can't issue badge: {data.error}</div>}
+              {badgeLoadingStatus === 'error' && <div className="badge-loading">Can&apos;t issue badge: {data.error}</div>}
               {badgeLoadingStatus === 'success' && (
               <div className="badge-info-block">
                 <div className="badge-issuer-logo"><img src={data.platform_logo_url} style={{ height: 40 }} /></div>
@@ -33,12 +33,8 @@ export function BadgesModal({ onClose, badgeLoadingStatus, data }) {
                     Account
                   </a>
                 </div>
-                <div className="badge-notification"><a
-                  href={data.badge_external_url}
-                  className="badge-notification-link"
-                  target="_blank"
-                >View your badge on Badgr for sharing
-                  options.</a>
+                <div className="badge-notification">
+                  <a href={data.badge_external_url} className="badge-notification-link" target="_blank">View your badge on Badgr for sharing options.</a>
                 </div>
               </div>
               )}
@@ -58,6 +54,7 @@ export function BadgesModal({ onClose, badgeLoadingStatus, data }) {
 BadgesModal.propTypes = {
   onClose: PropTypes.func,
   badgeLoadingStatus: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.object,
 };
 
