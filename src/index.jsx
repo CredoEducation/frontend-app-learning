@@ -22,6 +22,7 @@ import { CourseExit } from './courseware/course/course-exit';
 import CoursewareContainer from './courseware';
 import CoursewareRedirectLandingPage from './courseware/CoursewareRedirectLandingPage';
 import DatesTab from './course-home/dates-tab';
+import PageNotFound from './custom/page-not-found';
 import GoalUnsubscribe from './course-home/goal-unsubscribe';
 import ProgressTab from './course-home/progress-tab/ProgressTab';
 import { TabContainer } from './tab-page';
@@ -79,6 +80,7 @@ subscribe(APP_READY, () => {
                 ]}
                 component={CoursewareContainer}
               />
+              <PageRoute component={PageNotFound} />
             </Switch>
           </UserMessagesProvider>
         </NoticesProvider>

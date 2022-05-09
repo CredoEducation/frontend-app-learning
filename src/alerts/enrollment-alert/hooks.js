@@ -13,6 +13,7 @@ export function useEnrollmentAlert(courseId) {
   const { authenticatedUser } = useContext(AppContext);
   const course = useModel('courseHomeMeta', courseId);
   const outline = useModel('outline', courseId);
+  const { userMustBeActive } = course;
   const enrolledUser = course && course.isEnrolled !== undefined && course.isEnrolled;
   const privateOutline = outline && outline.courseBlocks && !outline.courseBlocks.courses;
   /**
@@ -28,6 +29,11 @@ export function useEnrollmentAlert(courseId) {
     extraText: outline && outline.enrollAlert ? outline.enrollAlert.extraText : '',
     isStaff: course && course.isStaff,
   };
+
+  if (userMustBeActive) {
+    payload.canEnroll = false;
+    payload.userMustBeActive = true;
+  }
 
   useAlert(isVisible, {
     code: 'clientEnrollmentAlert',

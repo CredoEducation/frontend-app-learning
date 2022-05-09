@@ -26,6 +26,16 @@ function useEnrollClickHandler(courseId, orgId, successText) {
         courserun_key: courseId,
       });
       global.location.reload();
+    }).catch((error) => {
+      addFlash({
+        dismissible: true,
+        flash: true,
+        text: error.response.data.message,
+        type: ALERT_TYPES.ERROR,
+        topic: 'course',
+      });
+      setLoading(false);
+      global.location.reload();
     });
   }, [courseId]);
 

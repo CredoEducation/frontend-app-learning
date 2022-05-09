@@ -19,6 +19,7 @@ function PrivateCourseAlert({ intl, payload }) {
     anonymousUser,
     canEnroll,
     courseId,
+    userMustBeActive,
   } = payload;
 
   const {
@@ -106,7 +107,7 @@ function PrivateCourseAlert({ intl, payload }) {
           )}
           {!canEnroll && (
             <>
-              {intl.formatMessage(enrollmentMessages.alert)}
+              {userMustBeActive ? 'Please, activate you account' : intl.formatMessage(enrollmentMessages.alert)}
             </>
           )}
         </>
@@ -120,6 +121,7 @@ PrivateCourseAlert.propTypes = {
   payload: PropTypes.shape({
     anonymousUser: PropTypes.bool,
     canEnroll: PropTypes.bool,
+    userMustBeActive: PropTypes.bool,
     courseId: PropTypes.string,
   }).isRequired,
 };

@@ -17,6 +17,7 @@ function EnrollmentAlert({ intl, payload }) {
     courseId,
     extraText,
     isStaff,
+    userMustBeActive,
   } = payload;
 
   const {
@@ -49,7 +50,7 @@ function EnrollmentAlert({ intl, payload }) {
   return (
     <Alert variant={type} icon={icon}>
       <div className="d-flex">
-        {text}
+        {userMustBeActive ? `${text} Please, activate your account first` : text}
         {button}
         {loading && <FontAwesomeIcon icon={faSpinner} spin />}
       </div>
@@ -61,6 +62,7 @@ EnrollmentAlert.propTypes = {
   intl: intlShape.isRequired,
   payload: PropTypes.shape({
     canEnroll: PropTypes.bool,
+    userMustBeActive: PropTypes.bool,
     courseId: PropTypes.string,
     extraText: PropTypes.string,
     isStaff: PropTypes.bool,
