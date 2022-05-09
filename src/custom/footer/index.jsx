@@ -60,7 +60,7 @@ class SiteFooter extends React.Component {
               >
                 <img
                   style={{ maxHeight: 45 }}
-                  src={logo || config.LOGO_TRADEMARK_URL}
+                  src={logo || config.LOGO_URL}
                 />
               </a>
             </p>

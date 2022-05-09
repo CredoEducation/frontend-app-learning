@@ -45,6 +45,7 @@ function PrivateCourseAlert({ intl, payload }) {
     </Button>
   );
 
+  const disableRegister = getConfig().DISABLE_REGISTER;
   const register = (
     <Hyperlink
       style={{ textDecoration: 'underline' }}
@@ -70,6 +71,7 @@ function PrivateCourseAlert({ intl, payload }) {
           <p className="font-weight-bold">
             {intl.formatMessage(enrollmentMessages.alert)}
           </p>
+          {!disableRegister && (
           <FormattedMessage
             id="learning.privateCourse.signInOrRegister"
             description="Prompts the user to sign in or register to see course content."
@@ -79,6 +81,17 @@ function PrivateCourseAlert({ intl, payload }) {
               register,
             }}
           />
+          )}
+          {disableRegister && (
+          <FormattedMessage
+            id="learning.privateCourse.signInOrRegister"
+            description="Prompts the user to sign in to see course content."
+            defaultMessage="{signIn} and then enroll in this course."
+            values={{
+              signIn,
+            }}
+          />
+          )}
         </>
       )}
       {!anonymousUser && (

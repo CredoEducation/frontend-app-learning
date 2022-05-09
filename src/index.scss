@@ -38,20 +38,6 @@
 
 .course-tabs-navigation {
   border-bottom: solid 1px #eaeaea;
-
-  .nav a,
-  .nav button {
-    &:hover {
-      background-color: $light-400;
-    }
-  }
-
-  .nav a {
-    &:not(.active):hover {
-      background-color: $light-400;
-      border-bottom: none;
-    }
-  }
 }
 
 .nav-underline-tabs {
@@ -61,6 +47,8 @@
     border-bottom: 4px solid transparent;
     border-top: 4px solid transparent;
     color: $gray-700;
+    font-weight: normal;
+    font-size: 15px;
 
     // temporary until we can remove .btn class from dropdowns
     border-left: 0;
@@ -70,9 +58,8 @@
     &:hover,
     &:focus,
     &.active {
-      font-weight: $font-weight-normal;
-      color: $primary-500;
-      border-bottom-color: $primary-500;
+      color: #0075b4;
+      border-bottom-color: #0075b4;
     }
   }
 }
@@ -382,3 +369,5 @@
 
 /* NW */
 @import 'custom.scss';
+@import 'header.scss';
+@import 'footer.scss';

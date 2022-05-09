@@ -8,6 +8,7 @@ import { WarningFilled } from '@edx/paragon/icons';
 import genericMessages from '../../generic/messages';
 
 function LogistrationAlert({ intl }) {
+  const disableRegister = getConfig().DISABLE_REGISTER;
   const signIn = (
     <Hyperlink
       style={{ textDecoration: 'underline' }}
@@ -30,6 +31,7 @@ function LogistrationAlert({ intl }) {
 
   return (
     <Alert variant="warning" icon={WarningFilled}>
+      {!disableRegister && (
       <FormattedMessage
         id="learning.logistration.alert"
         description="Prompts the user to sign in or register to see course content."
@@ -39,6 +41,17 @@ function LogistrationAlert({ intl }) {
           register,
         }}
       />
+      )}
+      {disableRegister && (
+      <FormattedMessage
+        id="learning.logistration.alert"
+        description="Prompts the user to sign in to see course content."
+        defaultMessage="To see course content, {signIn}."
+        values={{
+          signIn,
+        }}
+      />
+      )}
     </Alert>
   );
 }
