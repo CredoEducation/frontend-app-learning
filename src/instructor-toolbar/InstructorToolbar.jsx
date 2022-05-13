@@ -63,6 +63,7 @@ export default function InstructorToolbar(props) {
     courseId,
     unitId,
     canViewLegacyCourseware,
+    studioStaffAccess,
     tab,
   } = props;
 
@@ -81,26 +82,30 @@ export default function InstructorToolbar(props) {
           <div className="align-items-center flex-grow-1 d-md-flex mx-1 my-1">
             <MasqueradeWidget courseId={courseId} onError={showMasqueradeError} />
           </div>
-          {(urlLegacy || urlStudio || urlInsights) && (
+          {studioStaffAccess && (
+          <>
+            {(urlLegacy || urlStudio || urlInsights) && (
             <>
               <hr className="border-light" />
               <span className="mr-2 mt-1 col-form-label">View course in:</span>
             </>
-          )}
-          {urlLegacy && (
+            )}
+            {urlLegacy && (
             <span className="mx-1 my-1">
               <a className="btn btn-inverse-outline-primary" href={urlLegacy}>Legacy experience</a>
             </span>
-          )}
-          {urlStudio && (
+            )}
+            {urlStudio && (
             <span className="mx-1 my-1">
               <a className="btn btn-inverse-outline-primary" href={urlStudio}>Studio</a>
             </span>
-          )}
-          {urlInsights && (
+            )}
+            {urlInsights && (
             <span className="mx-1 my-1">
               <a className="btn btn-inverse-outline-primary" href={urlInsights}>Insights</a>
             </span>
+            )}
+          </>
           )}
         </div>
       </div>
@@ -129,6 +134,7 @@ InstructorToolbar.propTypes = {
   courseId: PropTypes.string,
   unitId: PropTypes.string,
   canViewLegacyCourseware: PropTypes.bool,
+  studioStaffAccess: PropTypes.bool,
   tab: PropTypes.string,
 };
 
@@ -136,5 +142,6 @@ InstructorToolbar.defaultProps = {
   courseId: undefined,
   unitId: undefined,
   canViewLegacyCourseware: undefined,
+  studioStaffAccess: true,
   tab: '',
 };
