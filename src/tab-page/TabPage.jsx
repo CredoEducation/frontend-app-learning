@@ -39,6 +39,7 @@ function TabPage({ intl, ...props }) {
     org,
     start,
     title,
+    profileImageUrl,
   } = useModel('courseHomeMeta', courseId);
 
   if (courseStatus === 'loading') {
@@ -83,6 +84,7 @@ function TabPage({ intl, ...props }) {
           courseOrg={org}
           courseNumber={number}
           courseTitle={title}
+          profileImageUrl={profileImageUrl}
         />
         <LoadedTabPage {...props} />
         <Footer />

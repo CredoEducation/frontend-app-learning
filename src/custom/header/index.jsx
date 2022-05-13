@@ -7,7 +7,7 @@ import { injectIntl } from '@edx/frontend-platform/i18n';
 import Menu from './menu';
 
 const Header = ({
-  courseOrg, courseNumber, courseTitle, showUserDropdown,
+  courseOrg, courseNumber, courseTitle, showUserDropdown, profileImageUrl,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
   const siteName = getConfig().SITE_NAME;
@@ -18,13 +18,16 @@ const Header = ({
   const logoutLinkWithLoginRedirect = `${lmsBaseUrl}/logout?redirect_url=%2Flogin`;
   const showLoginButton = authenticatedUser && authenticatedUser.email.endsWith('@credomodules.com');
 
-  const userProfileImageUrl = `${lmsBaseUrl}/static/images/profiles/default_50.png`;
+  let userProfileImageUrl = `${lmsBaseUrl}/static/images/profiles/default_50.png`;
   let userMenuLinks = [];
 
   if (showUserDropdown && authenticatedUser) {
-    //    userProfileImageUrl = user.profile_image_url.startsWith('http')
-    //        ? user.profile_image_url
-    //        : `${lmsBaseUrl}${user.profile_image_url}`;
+    if (profileImageUrl) {
+      userProfileImageUrl = profileImageUrl.startsWith('http')
+        ? profileImageUrl
+        : `${lmsBaseUrl}${profileImageUrl}`;
+    }
+
     userMenuLinks = [{
       key: 'dashboard',
       title: 'Dashboard',
@@ -93,6 +96,7 @@ Header.propTypes = {
   courseNumber: PropTypes.string,
   courseTitle: PropTypes.string,
   showUserDropdown: PropTypes.bool,
+  profileImageUrl: PropTypes.string,
 };
 
 Header.defaultProps = {
@@ -100,6 +104,7 @@ Header.defaultProps = {
   courseNumber: null,
   courseTitle: null,
   showUserDropdown: true,
+  profileImageUrl: '',
 };
 
 export default injectIntl(Header);
