@@ -85,6 +85,7 @@ function Unit({
   mmp2p,
 }) {
   const { authenticatedUser } = useContext(AppContext);
+  const hideBookmarkButton = authenticatedUser && authenticatedUser.email.endsWith('@credomodules.com');
   const view = authenticatedUser ? 'student_view' : 'public_view';
   let iframeUrl = `${getConfig().LMS_BASE_URL}/xblock/${id}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}`;
   if (format) {
@@ -147,11 +148,13 @@ function Unit({
     <div className="unit">
       <h1 className="mb-0 h3">{unit.title}</h1>
       <h2 className="sr-only">{intl.formatMessage(messages.headerPlaceholder)}</h2>
+      {!hideBookmarkButton && (
       <BookmarkButton
         unitId={unit.id}
         isBookmarked={unit.bookmarked}
         isProcessing={unit.bookmarkedUpdateState === 'loading'}
       />
+      )}
       { !mmp2p.state.isEnabled && contentTypeGatingEnabled && unit.containsContentTypeGatedContent && (
         <Suspense
           fallback={(
