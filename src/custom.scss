@@ -12,7 +12,7 @@
   box-shadow: 0 3px 3px rgb(0 0 0 / 40%);
   margin-bottom: 10px;
 
-  .btn {
+  .btn, .btn:hover, .btn:focus {
     border-color: #000000;
     color: #000000;
   }
@@ -23,7 +23,7 @@
 
 .modal-scores {
   height: 100%;
-  max-width: 80%;
+  max-width: 80% !important;
 
   // I don't like this.  We need to set a height of 100% on a div created by react-focus-on, a
   // package we use in our Modal.  That div has no class name or ID, so instead we're uniquely
@@ -284,7 +284,7 @@
 
 .modal-badges {
   height: 100%;
-  max-width: 50%;
+  max-width: 50% !important;
 
   // I don't like this.  We need to set a height of 100% on a div created by react-focus-on, a
   // package we use in our Modal.  That div has no class name or ID, so instead we're uniquely

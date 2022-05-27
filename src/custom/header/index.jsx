@@ -16,7 +16,7 @@ const Header = ({
   const dashboardLink = `${lmsBaseUrl}/dashboard`;
   const logoutLink = `${lmsBaseUrl}/logout`;
   const logoutLinkWithLoginRedirect = `${lmsBaseUrl}/logout?redirect_url=%2Flogin`;
-  const showLoginButton = authenticatedUser && authenticatedUser.email.endsWith('@credomodules.com');
+  const showLoginAsAdminLink = authenticatedUser && authenticatedUser.email.endsWith('@credomodules.com');
 
   let userProfileImageUrl = `${lmsBaseUrl}/static/images/profiles/default_50.png`;
   let userMenuLinks = [];
@@ -66,23 +66,27 @@ const Header = ({
           {showUserDropdown && authenticatedUser
           && (
           <div className="secondary">
-            {showLoginButton && <div className="item"><a href={logoutLinkWithLoginRedirect} className="link">Login as admin</a></div>}
-            <div className="item">
-              <a className="link" href={dashboardLink}>
-                <img
-                  src={userProfileImageUrl}
-                  alt={authenticatedUser.username}
-                />
-                <span>{authenticatedUser.username}</span>
-              </a>
-            </div>
-            <div className="item dropdown">
-              <Menu>
-                {userMenuLinks.map(item => (
-                  <Menu.Item key={item.key} href={item.href} role="menuitem">{item.title}</Menu.Item>
-                ))}
-              </Menu>
-            </div>
+            {showLoginAsAdminLink && <div className="item"><a href={logoutLinkWithLoginRedirect} className="link">Login as admin</a></div>}
+            {!showLoginAsAdminLink && (
+            <>
+              <div className="item">
+                <a className="link" href={dashboardLink}>
+                  <img
+                    src={userProfileImageUrl}
+                    alt={authenticatedUser.username}
+                  />
+                  <span>{authenticatedUser.username}</span>
+                </a>
+              </div>
+              <div className="item dropdown">
+                <Menu>
+                  {userMenuLinks.map(item => (
+                    <Menu.Item key={item.key} href={item.href} role="menuitem">{item.title}</Menu.Item>
+                  ))}
+                </Menu>
+              </div>
+            </>
+            )}
           </div>
           )}
         </div>
