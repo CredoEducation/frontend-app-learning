@@ -44,6 +44,14 @@ function getLegacyWebUrl(canViewLegacyCourseware, courseId, unitId) {
   return `${getConfig().LMS_BASE_URL}/courses/${courseId}/jump_to/${unitId}?experience=legacy`;
 }
 
+function getNimblyWiseUrl() {
+  const url = getConfig().NW_HELP_URL;
+  if (url) {
+    return url;
+  }
+  return false;
+}
+
 export default function InstructorToolbar(props) {
   // This didMount logic became necessary once we had a page that does a redirect on a quick exit.
   // As a result, it unmounts the InstructorToolbar (which will be remounted by the new component),
@@ -70,6 +78,7 @@ export default function InstructorToolbar(props) {
   const urlInsights = getInsightsUrl(courseId);
   const urlLegacy = getLegacyWebUrl(canViewLegacyCourseware, courseId, unitId);
   const urlStudio = getStudioUrl(courseId, unitId);
+  const nwHelpUrl = getNimblyWiseUrl();
   const [masqueradeErrorMessage, showMasqueradeError] = useState(null);
 
   const accessExpirationMasqueradeBanner = useAccessExpirationMasqueradeBanner(courseId, tab);
@@ -84,12 +93,6 @@ export default function InstructorToolbar(props) {
           </div>
           {studioStaffAccess && (
           <>
-            {(urlLegacy || urlStudio || urlInsights) && (
-            <>
-              <hr className="border-light" />
-              <span className="mr-2 mt-1 col-form-label">View course in:</span>
-            </>
-            )}
             {urlLegacy && (
             <span className="mx-1 my-1">
               <a className="btn btn-inverse-outline-primary" href={urlLegacy}>Legacy experience</a>
@@ -97,12 +100,17 @@ export default function InstructorToolbar(props) {
             )}
             {urlStudio && (
             <span className="mx-1 my-1">
-              <a className="btn btn-inverse-outline-primary" href={urlStudio}>Studio</a>
+              <a className="btn btn-inverse-outline-primary" href={urlStudio}>View in Studio</a>
             </span>
             )}
             {urlInsights && (
             <span className="mx-1 my-1">
               <a className="btn btn-inverse-outline-primary" href={urlInsights}>Insights</a>
+            </span>
+            )}
+            {nwHelpUrl && (
+            <span className="mx-1 my-1">
+              <a className="btn btn-inverse-outline-primary" href={nwHelpUrl} target="_blank">NimblyWise Help Center</a>
             </span>
             )}
           </>
