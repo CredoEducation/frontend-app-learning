@@ -84,8 +84,10 @@ export const useScoresModalProps = (courseId, sequenceId, sequence) => {
   useEffect(() => {
     if (sequence && sequence.showSummaryInfoAfterQuiz) {
       checkScoresPanelDisplay();
+    } else if (sequence && !sequence.showSummaryInfoAfterQuiz && scoresPanelDisplay) {
+      setScoresPanelDisplay(false);
     }
-  }, [sequence]);
+  }, [sequence, scoresPanelDisplay]);
 
   /* Add listener on component mount */
   useEffect(() => {
