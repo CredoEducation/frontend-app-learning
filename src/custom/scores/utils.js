@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform';
 
@@ -66,11 +66,11 @@ export const useScoresModalProps = (courseId, sequenceId, sequence) => {
     }
   };
 
-  const openScoresModalListener = useCallback((msg) => {
-    if (sequence && sequence.showSummaryInfoAfterQuiz && msg.data === 'problemAnswered') {
+  const openScoresModalListener = (msg) => {
+    if (msg.data === 'showSummaryInfoWindow') {
       setScoresPanelDisplay(true);
     }
-  }, [sequence]);
+  };
 
   const closeScoresModalFn = () => {
     setScoresModalIsOpen(false);
