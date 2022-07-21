@@ -91,6 +91,7 @@ subscribe(APP_READY, () => {
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
+  console.log('Error: ', error);
   ReactDOM.render(<ErrorPage message={error.message} />, document.getElementById('root'));
 });
 
