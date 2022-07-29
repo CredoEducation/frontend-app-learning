@@ -71,6 +71,7 @@ export default function InstructorToolbar(props) {
     courseId,
     unitId,
     canViewLegacyCourseware,
+    showNwHelp,
     studioStaffAccess,
     tab,
   } = props;
@@ -91,14 +92,13 @@ export default function InstructorToolbar(props) {
           <div className="align-items-center flex-grow-1 d-md-flex mx-1 my-1">
             <MasqueradeWidget courseId={courseId} onError={showMasqueradeError} />
           </div>
-          {studioStaffAccess && (
           <>
             {urlLegacy && (
             <span className="mx-1 my-1">
               <a className="btn btn-inverse-outline-primary" href={urlLegacy}>Legacy experience</a>
             </span>
             )}
-            {urlStudio && (
+            {(studioStaffAccess && urlStudio) && (
             <span className="mx-1 my-1">
               <a className="btn btn-inverse-outline-primary" href={urlStudio}>View in Studio</a>
             </span>
@@ -108,13 +108,12 @@ export default function InstructorToolbar(props) {
               <a className="btn btn-inverse-outline-primary" href={urlInsights}>Insights</a>
             </span>
             )}
-            {nwHelpUrl && (
+            {(showNwHelp && nwHelpUrl) && (
             <span className="mx-1 my-1">
               <a className="btn btn-inverse-outline-primary" href={nwHelpUrl} target="_blank">NimblyWise Help Center</a>
             </span>
             )}
           </>
-          )}
         </div>
       </div>
       {masqueradeErrorMessage && (
@@ -142,6 +141,7 @@ InstructorToolbar.propTypes = {
   courseId: PropTypes.string,
   unitId: PropTypes.string,
   canViewLegacyCourseware: PropTypes.bool,
+  showNwHelp: PropTypes.bool,
   studioStaffAccess: PropTypes.bool,
   tab: PropTypes.string,
 };
@@ -150,6 +150,7 @@ InstructorToolbar.defaultProps = {
   courseId: undefined,
   unitId: undefined,
   canViewLegacyCourseware: undefined,
+  showNwHelp: true,
   studioStaffAccess: true,
   tab: '',
 };

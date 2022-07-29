@@ -27,6 +27,7 @@ function LoadedTabPage({
     canViewLegacyCourseware,
     org,
     originalUserIsStaff,
+    showNwHelp,
     studioStaffAccess,
     tabs,
     title,
@@ -60,6 +61,7 @@ function LoadedTabPage({
           courseId={courseId}
           unitId={unitId}
           canViewLegacyCourseware={canViewLegacyCourseware}
+          showNwHelp={showNwHelp}
           studioStaffAccess={studioStaffAccess}
           tab={activeTabSlug}
         />
