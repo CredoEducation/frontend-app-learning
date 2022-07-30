@@ -16,7 +16,7 @@ const Header = ({
   const dashboardLink = `${lmsBaseUrl}/dashboard`;
   const logoutLink = `${lmsBaseUrl}/logout`;
   const logoutLinkWithLoginRedirect = `${lmsBaseUrl}/logout?redirect_url=%2Flogin`;
-  const showLoginAsAdminLink = authenticatedUser && authenticatedUser.email.endsWith('@credomodules.com');
+  const isCredoAnonymous = authenticatedUser && authenticatedUser.email.endsWith('@credomodules.com');
 
   let userProfileImageUrl = `${lmsBaseUrl}/static/images/profiles/default_50.png`;
   let userMenuLinks = [];
@@ -51,7 +51,8 @@ const Header = ({
     <header className="learning-header">
       <div className="header">
         <h1 className="logo-ext">
-          <a href={dashboardLink}>
+          {/* eslint-disable-next-line no-script-url */}
+          <a href={isCredoAnonymous ? 'javascript: void(0);' : dashboardLink} style={{ cursor: isCredoAnonymous ? 'default' : 'pointer' }}>
             <img
               src={logoUrl}
               alt={siteName}
@@ -66,8 +67,8 @@ const Header = ({
           {showUserDropdown && authenticatedUser
           && (
           <div className="secondary">
-            {showLoginAsAdminLink && <div className="item"><a href={logoutLinkWithLoginRedirect} className="link">Login as admin</a></div>}
-            {!showLoginAsAdminLink && (
+            {isCredoAnonymous && <div className="item"><a href={logoutLinkWithLoginRedirect} className="link">Login as admin</a></div>}
+            {!isCredoAnonymous && (
             <>
               <div className="item">
                 <a className="link" href={dashboardLink}>
