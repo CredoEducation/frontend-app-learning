@@ -55,6 +55,7 @@ function LoadedTabPage({
       />
       <Helmet>
         <title>{`${activeTab ? `${activeTab.title} | ` : ''}${title} | ${getConfig().SITE_NAME}`}</title>
+        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
       </Helmet>
       {originalUserIsStaff && (
         <InstructorToolbar

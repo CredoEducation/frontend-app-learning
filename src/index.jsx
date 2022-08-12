@@ -122,6 +122,27 @@ initialize({
         NW_HELP_URL: process.env.NW_HELP_URL || null,
         DISABLE_REGISTER: process.env.DISABLE_REGISTER || false,
       }, 'LearnerAppConfig');
+      const { hostname } = global.location;
+      if (hostname.indexOf('credocourseware') !== -1) {
+        mergeConfig({
+          BASE_URL: process.env.CREDO_BASE_URL || process.env.BASE_URL || null,
+          CONTACT_URL: process.env.CREDO_CONTACT_URL || process.env.CONTACT_URL || null,
+          FAVICON_URL: process.env.CREDO_FAVICON_URL || process.env.FAVICON_URL || null,
+          // eslint-disable-next-line max-len
+          LMS_BASE_URL: hostname.indexOf('frame') !== -1 ? process.env.CREDO_FRAME_LMS_BASE_URL : (process.env.CREDO_LMS_BASE_URL || process.env.LMS_BASE_URL),
+          LOGIN_URL: process.env.CREDO_LOGIN_URL || process.env.LOGIN_URL || null,
+          LOGOUT_URL: process.env.CREDO_LOGOUT_URL || process.env.LOGOUT_URL || null,
+          LOGO_URL: process.env.CREDO_LOGO_URL || process.env.LOGO_URL || null,
+          // eslint-disable-next-line max-len
+          MARKETING_SITE_BASE_URL: process.env.CREDO_MARKETING_SITE_BASE_URL || process.env.MARKETING_SITE_BASE_URL || null,
+          // eslint-disable-next-line max-len
+          REFRESH_ACCESS_TOKEN_ENDPOINT: process.env.CREDO_REFRESH_ACCESS_TOKEN_ENDPOINT || process.env.REFRESH_ACCESS_TOKEN_ENDPOINT || null,
+          SITE_NAME: process.env.CREDO_SITE_NAME || process.env.SITE_NAME || null,
+          STUDIO_BASE_URL: process.env.CREDO_STUDIO_BASE_URL || process.env.STUDIO_BASE_URL || null,
+          SESSION_COOKIE_DOMAIN: process.env.CREDO_SESSION_COOKIE_DOMAIN || process.env.SESSION_COOKIE_DOMAIN || null,
+          FOOTER_LINKS: process.env.CREDO_FOOTER_LINKS || process.env.FOOTER_LINKS || null,
+        }, 'LearnerAppConfig');
+      }
     },
   },
   messages: [
