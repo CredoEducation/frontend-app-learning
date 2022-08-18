@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform';
 
@@ -19,12 +19,12 @@ export const useBadgesModalProps = (courseId, sequenceId) => {
     }
   };
 
-  const openBadgesModalListener = useCallback((msg) => {
+  const openBadgesModalListener = (msg) => {
     if (msg.data === 'badgeReady') {
       setBadgesModalIsOpen(true);
       fetchBadgeData();
     }
-  }, []);
+  };
 
   const closeBadgesModalFn = () => {
     setBadgesModalIsOpen(false);
