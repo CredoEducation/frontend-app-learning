@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform';
 
-export const useBadgesModalProps = (courseId, sequenceId) => {
+export const useBadgesModalProps = () => {
   const [badgesModalIsOpen, setBadgesModalIsOpen] = useState(false);
   const [badgeLoadingStatus, setBadgeLoadingStatus] = useState('loading');
   const [badgeData, setBadgeData] = useState({});
 
-  const fetchBadgeData = async () => {
-    const url = new URL(`${getConfig().LMS_BASE_URL}/badges/issue-badge/${courseId}/${sequenceId}/`);
+  const fetchBadgeData = async (cId, sId) => {
+    const url = new URL(`${getConfig().LMS_BASE_URL}/badges/issue-badge/${cId}/${sId}/`);
     const { data } = await getAuthenticatedHttpClient().post(url.href, {});
     if (!data.error) {
       setBadgeData(data.data);
@@ -22,7 +22,9 @@ export const useBadgesModalProps = (courseId, sequenceId) => {
   const openBadgesModalListener = (msg) => {
     if (msg.data === 'badgeReady') {
       setBadgesModalIsOpen(true);
-      fetchBadgeData();
+      // example: https://lms.host/course/<courseId>/<seqId>/...
+      const locPath = window.location.pathname.split('/');
+      fetchBadgeData(locPath[2], locPath[3]);
     }
   };
 

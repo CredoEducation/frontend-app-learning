@@ -46,7 +46,7 @@ function Sequence({
 }) {
   const {
     badgesModalIsOpen, closeBadgesModalFn, badgeLoadingStatus, badgeData,
-  } = useBadgesModalProps(courseId, sequenceId);
+  } = useBadgesModalProps();
 
   const course = useModel('coursewareMeta', courseId);
   const {
