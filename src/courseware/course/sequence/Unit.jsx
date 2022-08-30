@@ -85,16 +85,15 @@ function Unit({
   mmp2p,
 }) {
   const { authenticatedUser } = useContext(AppContext);
-  const hideBookmarkButton = authenticatedUser && authenticatedUser.email.endsWith('@credomodules.com');
+  const credoAnonUser = authenticatedUser.email.endsWith('@credomodules.com');
+  const hideBookmarkButton = authenticatedUser && credoAnonUser;
   const view = authenticatedUser ? 'student_view' : 'public_view';
   let iframeUrl = `${getConfig().LMS_BASE_URL}/xblock/${id}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}`;
   if (format) {
     iframeUrl += `&format=${format}`;
   }
-  if (window.location.hostname.endsWith('proxy.lirn.net')) {
-    const tokenCookieName = getConfig().ACCESS_TOKEN_COOKIE_NAME;
-    const jwtTokenRaw = sessionStorage.getItem(tokenCookieName);
-    iframeUrl += `&jwt_token=${jwtTokenRaw}`;
+  if (window.location.hostname.endsWith('proxy.lirn.net') && credoAnonUser) {
+    iframeUrl += `&email=${authenticatedUser.email}`;
   }
 
   const [iframeHeight, setIframeHeight] = useState(0);
