@@ -87,7 +87,13 @@ function Unit({
   const { authenticatedUser } = useContext(AppContext);
   const hideBookmarkButton = authenticatedUser && authenticatedUser.email.endsWith('@credomodules.com');
   const view = authenticatedUser ? 'student_view' : 'public_view';
-  let iframeUrl = `${getConfig().LMS_BASE_URL}/xblock/${id}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}`;
+  let iframeUrl = '';
+  const iframeUrlPart = `/xblock/${id}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}`;
+  if (window.location.hostname.endsWith('proxy.lirn.net')) {
+    iframeUrl = `/lms-api${iframeUrlPart}`;
+  } else {
+    iframeUrl = `${getConfig().LMS_BASE_URL}${iframeUrlPart}`;
+  }
   if (format) {
     iframeUrl += `&format=${format}`;
   }
