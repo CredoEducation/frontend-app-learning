@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import { processEvent } from '../../../course-home/data/thunks';
+import { isBrokenProxyUsage } from '../../../utils';
 /** [MM-P2P] Experiment */
 import { MMP2PLockPaywall } from '../../../experiments/mm-p2p';
 import { useEventListener } from '../../../generic/hooks';
@@ -88,11 +89,11 @@ function Unit({
   const credoAnonUser = authenticatedUser.email.endsWith('@credomodules.com');
   const hideBookmarkButton = authenticatedUser && credoAnonUser;
   const view = authenticatedUser ? 'student_view' : 'public_view';
-  let iframeUrl = `${getConfig().LMS_BASE_URL}/xblock/${id}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}`;
+  let iframeUrl = `${getConfig().LMS_BASE_URL}/xblock/${id}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}&mfe=1`;
   if (format) {
     iframeUrl += `&format=${format}`;
   }
-  if (global.location.hostname.endsWith('proxy.lirn.net') && credoAnonUser) {
+  if (isBrokenProxyUsage() && credoAnonUser) {
     iframeUrl += `&email=${authenticatedUser.email}`;
   }
 
@@ -237,9 +238,7 @@ function Unit({
               // for a successful load. If it *has not fired*, we are in an error state. For example, the backend
               // could have given us a 4xx or 5xx response.
               if (!hasLoaded) {
-                if (!global.location.hostname.endsWith('proxy.lirn.net')) {
-                  setShowError(true);
-                }
+                setShowError(true);
               }
 
               window.onmessage = (e) => {

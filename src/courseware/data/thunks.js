@@ -23,6 +23,7 @@ import {
   fetchSequenceRequest,
   fetchSequenceSuccess,
 } from './slice';
+import { isBrokenProxyUsage } from '../../utils';
 
 export function fetchCourse(courseId) {
   return async (dispatch) => {
@@ -117,7 +118,7 @@ export function fetchCourse(courseId) {
 
 const redirectUserToProfileFieldsForm = (profileFieldsUrl, userEmail) => {
   let newUrl = `${getConfig().LMS_BASE_URL}${profileFieldsUrl}?next=${encodeURIComponent(global.location.href)}`;
-  if (userEmail) {
+  if (userEmail && isBrokenProxyUsage()) {
     newUrl += `&email=${userEmail}`;
   }
   window.location.href = newUrl;
