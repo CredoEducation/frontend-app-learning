@@ -115,8 +115,11 @@ export function fetchCourse(courseId) {
   };
 }
 
-const redirectUserToProfileFieldsForm = (profileFieldsUrl) => {
-  const newUrl = `${getConfig().LMS_BASE_URL}${profileFieldsUrl}?next=${encodeURIComponent(global.location.href)}`;
+const redirectUserToProfileFieldsForm = (profileFieldsUrl, userEmail) => {
+  let newUrl = `${getConfig().LMS_BASE_URL}${profileFieldsUrl}?next=${encodeURIComponent(global.location.href)}`;
+  if (userEmail) {
+    newUrl += `&email=${userEmail}`;
+  }
   window.location.href = newUrl;
 };
 
@@ -126,7 +129,7 @@ export function fetchSequence(sequenceId) {
     try {
       const { sequence, units } = await getSequenceMetadata(sequenceId);
       if (sequence.userMustFillAdditionalProfileFields) {
-        redirectUserToProfileFieldsForm(sequence.profileFieldsUrl);
+        redirectUserToProfileFieldsForm(sequence.profileFieldsUrl, sequence.user_email);
         return;
       }
       if (sequence.blockType !== 'sequential') {

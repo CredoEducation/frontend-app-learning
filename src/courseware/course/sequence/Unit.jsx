@@ -92,7 +92,7 @@ function Unit({
   if (format) {
     iframeUrl += `&format=${format}`;
   }
-  if (window.location.hostname.endsWith('proxy.lirn.net') && credoAnonUser) {
+  if (global.location.hostname.endsWith('proxy.lirn.net') && credoAnonUser) {
     iframeUrl += `&email=${authenticatedUser.email}`;
   }
 
@@ -237,7 +237,7 @@ function Unit({
               // for a successful load. If it *has not fired*, we are in an error state. For example, the backend
               // could have given us a 4xx or 5xx response.
               if (!hasLoaded) {
-                if (!window.location.hostname.endsWith('proxy.lirn.net')) {
+                if (!global.location.hostname.endsWith('proxy.lirn.net')) {
                   setShowError(true);
                 }
               }
