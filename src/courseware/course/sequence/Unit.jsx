@@ -237,7 +237,9 @@ function Unit({
               // for a successful load. If it *has not fired*, we are in an error state. For example, the backend
               // could have given us a 4xx or 5xx response.
               if (!hasLoaded) {
-                setShowError(true);
+                if (!window.location.hostname.endsWith('proxy.lirn.net')) {
+                  setShowError(true);
+                }
               }
 
               window.onmessage = (e) => {
