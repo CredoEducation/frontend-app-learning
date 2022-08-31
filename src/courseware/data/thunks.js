@@ -129,7 +129,7 @@ export function fetchSequence(sequenceId) {
     try {
       const { sequence, units } = await getSequenceMetadata(sequenceId);
       if (sequence.userMustFillAdditionalProfileFields) {
-        redirectUserToProfileFieldsForm(sequence.profileFieldsUrl, sequence.user_email);
+        redirectUserToProfileFieldsForm(sequence.profileFieldsUrl, sequence.userEmail);
         return;
       }
       if (sequence.blockType !== 'sequential') {
