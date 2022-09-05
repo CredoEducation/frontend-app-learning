@@ -18,9 +18,9 @@ function CourseTabsNavigation({
         >
           {tabs.map(({ url, title, slug }) => (
             <a
+              href={slug === activeTabSlug ? 'javascript: void(0);' : url}
               key={slug}
               className={classNames('nav-item flex-shrink-0 nav-link', { active: slug === activeTabSlug })}
-              href={url}
             >
               {title}
             </a>

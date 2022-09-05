@@ -9,5 +9,6 @@ module.exports = createConfig('eslint', {
       'jsx-a11y/anchor-is-valid': 'off',
       'jsx-a11y/alt-text': 'off',
       'jsx-a11y/control-has-associated-label': 'off',
+      'no-script-url': 'off',
     },
 });
