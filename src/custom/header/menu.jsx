@@ -75,6 +75,7 @@ const MenuItem = ({
         onClick={handleClick}
         href={href}
         className="link"
+        role="menuitem"
       >
         {children}
       </a>

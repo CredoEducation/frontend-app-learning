@@ -59,6 +59,7 @@ class SiteFooter extends React.Component {
                 href={config.LMS_BASE_URL}
               >
                 <img
+                  alt={siteName}
                   style={{ maxHeight: 45 }}
                   src={logo || config.LOGO_URL}
                 />
