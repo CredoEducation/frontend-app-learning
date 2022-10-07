@@ -16,4 +16,4 @@ export const appendBrowserTimezoneToUrl = (url) => {
   return urlObject.href;
 };
 
-export const isBrokenProxyUsage = () => global.location.hostname.endsWith('proxy.lirn.net');
+export const isBrokenProxyUsage = () => global.location.hostname.endsWith('proxy.lirn.net') || global.location.hostname.endsWith('idm.oclc.org');
