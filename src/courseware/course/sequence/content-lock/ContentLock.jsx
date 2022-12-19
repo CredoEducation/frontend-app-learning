@@ -9,7 +9,7 @@ import { Button } from '@edx/paragon';
 import messages from './messages';
 
 function ContentLock({
-  intl, courseId, prereqSectionName, prereqId, sequenceTitle,
+  btnTitle, intl, courseId, prereqSectionName, prereqId, sequenceTitle,
 }) {
   const handleClick = useCallback(() => {
     history.push(`/course/${courseId}/${prereqId}`);
@@ -29,12 +29,18 @@ function ContentLock({
         })}
       </p>
       <p>
-        <Button variant="primary" onClick={handleClick}>{intl.formatMessage(messages['learn.contentLock.goToSection'])}</Button>
+        <Button variant="primary" onClick={handleClick}>{btnTitle || intl.formatMessage(messages['learn.contentLock.goToSection'])}</Button>
       </p>
     </>
   );
 }
+
+ContentLock.defaultProps = {
+  btnTitle: undefined,
+};
+
 ContentLock.propTypes = {
+  btnTitle: PropTypes.string,
   intl: intlShape.isRequired,
   courseId: PropTypes.string.isRequired,
   prereqSectionName: PropTypes.string.isRequired,

@@ -19,6 +19,7 @@ function UnitButton({
   unitId,
   className,
   showTitle,
+  forceLock,
 }) {
   const handleClick = useCallback(() => {
     onClick(unitId);
@@ -34,7 +35,7 @@ function UnitButton({
       onClick={handleClick}
       title={title}
     >
-      <UnitIcon type={contentType} />
+      <UnitIcon type={forceLock ? 'lock' : contentType} />
       {showTitle && <span className="unit-title">{title}</span>}
       {showCompletion && complete ? <CompleteIcon size="sm" className="text-success ml-2" /> : null}
       {bookmarked ? (
@@ -58,6 +59,7 @@ UnitButton.propTypes = {
   showTitle: PropTypes.bool,
   title: PropTypes.string.isRequired,
   unitId: PropTypes.string.isRequired,
+  forceLock: PropTypes.bool,
 };
 
 UnitButton.defaultProps = {
@@ -67,6 +69,7 @@ UnitButton.defaultProps = {
   complete: false,
   showTitle: false,
   showCompletion: true,
+  forceLock: false,
 };
 
 const mapStateToProps = (state, props) => {

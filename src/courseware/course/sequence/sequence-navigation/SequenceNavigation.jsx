@@ -60,6 +60,7 @@ function SequenceNavigation({
       <SequenceNavigationTabs
         unitIds={sequence.unitIds}
         unitId={unitId}
+        unitsSequentialCompletion={sequence.unitsSequentialCompletion}
         showCompletion={sequence.showCompletion}
         onNavigate={onNavigate}
       />
