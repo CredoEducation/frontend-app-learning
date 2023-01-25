@@ -52,7 +52,7 @@ const Header = ({
       <div className="header">
         <h1 className="logo-ext">
           {/* eslint-disable-next-line no-script-url */}
-          <a href={isCredoAnonymous ? 'javascript: void(0);' : dashboardLink} style={{ cursor: isCredoAnonymous ? 'default' : 'pointer' }}>
+          <a href={isCredoAnonymous ? '#' : dashboardLink} style={{ cursor: isCredoAnonymous ? 'default' : 'pointer' }}>
             <img
               src={logoUrl}
               alt={siteName}
