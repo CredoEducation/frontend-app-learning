@@ -143,6 +143,24 @@ initialize({
           FOOTER_LINKS: process.env.CREDO_FOOTER_LINKS || process.env.FOOTER_LINKS || null,
         }, 'LearnerAppConfig');
       }
+      if (hostname.indexOf('weaveeducation') !== -1) {
+        mergeConfig({
+          BASE_URL: process.env.WEAVE_BASE_URL || process.env.BASE_URL || null,
+          FAVICON_URL: process.env.WEAVE_FAVICON_URL || process.env.FAVICON_URL || null,
+          // eslint-disable-next-line max-len
+          LMS_BASE_URL: process.env.WEAVE_LMS_BASE_URL || process.env.LMS_BASE_URL,
+          LOGIN_URL: process.env.WEAVE_LOGIN_URL || process.env.LOGIN_URL || null,
+          LOGOUT_URL: process.env.WEAVE_LOGOUT_URL || process.env.LOGOUT_URL || null,
+          LOGO_URL: process.env.WEAVE_LOGO_URL || process.env.LOGO_URL || null,
+          // eslint-disable-next-line max-len
+          MARKETING_SITE_BASE_URL: process.env.WEAVE_MARKETING_SITE_BASE_URL || process.env.MARKETING_SITE_BASE_URL || null,
+          // eslint-disable-next-line max-len
+          REFRESH_ACCESS_TOKEN_ENDPOINT: process.env.WEAVE_REFRESH_ACCESS_TOKEN_ENDPOINT || process.env.REFRESH_ACCESS_TOKEN_ENDPOINT || null,
+          SITE_NAME: process.env.WEAVE_SITE_NAME || process.env.SITE_NAME || null,
+          STUDIO_BASE_URL: process.env.WEAVE_STUDIO_BASE_URL || process.env.STUDIO_BASE_URL || null,
+          SESSION_COOKIE_DOMAIN: process.env.WEAVE_SESSION_COOKIE_DOMAIN || process.env.SESSION_COOKIE_DOMAIN || null,
+        }, 'LearnerAppConfig');
+      }
     },
   },
   messages: [
