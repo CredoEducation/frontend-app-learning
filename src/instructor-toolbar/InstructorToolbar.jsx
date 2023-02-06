@@ -44,7 +44,7 @@ function getLegacyWebUrl(canViewLegacyCourseware, courseId, unitId) {
   return `${getConfig().LMS_BASE_URL}/courses/${courseId}/jump_to/${unitId}?experience=legacy`;
 }
 
-function getNimblyWiseUrl() {
+function getHelpUrl() {
   const url = getConfig().NW_HELP_URL;
   if (url) {
     return url;
@@ -79,7 +79,7 @@ export default function InstructorToolbar(props) {
   const urlInsights = getInsightsUrl(courseId);
   const urlLegacy = getLegacyWebUrl(canViewLegacyCourseware, courseId, unitId);
   const urlStudio = getStudioUrl(courseId, unitId);
-  const nwHelpUrl = getNimblyWiseUrl();
+  const nwHelpUrl = getHelpUrl();
   const [masqueradeErrorMessage, showMasqueradeError] = useState(null);
 
   const accessExpirationMasqueradeBanner = useAccessExpirationMasqueradeBanner(courseId, tab);
@@ -110,7 +110,7 @@ export default function InstructorToolbar(props) {
             )}
             {(showNwHelp && nwHelpUrl) && (
             <span className="mx-1 my-1">
-              <a className="btn btn-inverse-outline-primary" href={nwHelpUrl} target="_blank">NimblyWise Help Center</a>
+              <a className="btn btn-inverse-outline-primary" href={nwHelpUrl} target="_blank">Help Center</a>
             </span>
             )}
           </>
