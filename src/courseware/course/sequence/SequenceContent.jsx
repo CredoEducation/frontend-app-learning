@@ -26,11 +26,13 @@ function SequenceContent({
   let firstUncompletedUnitTitle = null;
   let currentUnitTitle = null;
   let prevUnitId = null;
+  let currentCompletion = false;
 
-  if (sequence.unitsSequentialCompletion) {
+  if (sequence.unitsSequentialCompletion || sequence.disableUnitsAfterCompletion) {
     sequence.unitIds.forEach((uId, i) => {
       if (uId === unitId) {
         currentUnitTitle = unitsArr[i].title;
+        currentCompletion = unitsArr[i].complete;
       }
       if ((i > 0) && (uId === unitId)) {
         prevUnitId = sequence.unitIds[i - 1];
@@ -80,7 +82,17 @@ function SequenceContent({
     );
   }
 
+  let contentLocked = false;
+  let lockMsg;
   if (sequence.unitsSequentialCompletion && prevUnitId && !unitCompletion[prevUnitId]) {
+    contentLocked = true;
+  }
+  if (sequence.disableUnitsAfterCompletion && currentCompletion) {
+    contentLocked = true;
+    lockMsg = 'Block is completed';
+  }
+
+  if (contentLocked) {
     return (
       <Suspense
         fallback={(
@@ -91,10 +103,11 @@ function SequenceContent({
       >
         <ContentLock
           btnTitle="Go To Uncompleted Block"
+          lockMsg={lockMsg}
           courseId={courseId}
           sequenceTitle={currentUnitTitle}
           prereqSectionName={firstUncompletedUnitTitle}
-          prereqId={`${sequenceId}/${firstUncompletedUnitId}`}
+          prereqId={firstUncompletedUnitId ? `${sequenceId}/${firstUncompletedUnitId}` : undefined}
         />
       </Suspense>
     );

@@ -22,7 +22,7 @@ function UnitNavigation({
   onClickNext,
   goToCourseExitPage,
 }) {
-  const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(sequenceId, unitId);
+  const { isFirstUnit, isLastUnit, prevUnitDisabled } = useSequenceNavigationMetadata(sequenceId, unitId);
   const { courseId } = useSelector(state => state.courseware);
 
   const renderNextButton = () => {
@@ -52,7 +52,7 @@ function UnitNavigation({
       <Button
         variant="outline-secondary"
         className="previous-button mr-2 d-flex align-items-center justify-content-center"
-        disabled={isFirstUnit}
+        disabled={isFirstUnit || prevUnitDisabled}
         onClick={onClickPrevious}
       >
         <FontAwesomeIcon icon={prevArrow} className="mr-2" size="sm" />

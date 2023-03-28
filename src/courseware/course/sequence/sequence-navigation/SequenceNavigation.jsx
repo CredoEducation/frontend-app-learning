@@ -34,7 +34,7 @@ function SequenceNavigation({
   mmp2p,
 }) {
   const sequence = useModel('sequences', sequenceId);
-  const { isFirstUnit, isLastUnit } = useSequenceNavigationMetadata(sequenceId, unitId);
+  const { isFirstUnit, isLastUnit, prevUnitDisabled } = useSequenceNavigationMetadata(sequenceId, unitId);
   const {
     courseId,
     sequenceStatus,
@@ -58,6 +58,7 @@ function SequenceNavigation({
     }
     return (
       <SequenceNavigationTabs
+        disableUnitsAfterCompletion={sequence.disableUnitsAfterCompletion}
         unitIds={sequence.unitIds}
         unitId={unitId}
         unitsSequentialCompletion={sequence.unitsSequentialCompletion}
@@ -85,7 +86,7 @@ function SequenceNavigation({
 
   return sequenceStatus === LOADED && (
     <nav id="courseware-sequenceNavigation" className={classNames('sequence-navigation', className)} style={{ width: shouldDisplayNotificationTriggerInSequence ? '90%' : null }}>
-      <Button variant="link" className="previous-btn" onClick={previousSequenceHandler} disabled={isFirstUnit} iconBefore={prevArrow}>
+      <Button variant="link" className="previous-btn" onClick={previousSequenceHandler} disabled={isFirstUnit || prevUnitDisabled} iconBefore={prevArrow}>
         {shouldDisplayNotificationTriggerInSequence ? null : intl.formatMessage(messages.previousButton)}
       </Button>
       {renderUnitButtons()}

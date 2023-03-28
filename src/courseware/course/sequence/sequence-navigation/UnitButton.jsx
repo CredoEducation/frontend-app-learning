@@ -20,10 +20,15 @@ function UnitButton({
   className,
   showTitle,
   forceLock,
+  disableUnitsAfterCompletion,
 }) {
   const handleClick = useCallback(() => {
+    if (disableUnitsAfterCompletion && complete) {
+      return;
+    }
     onClick(unitId);
   });
+  const css = disableUnitsAfterCompletion && complete ? { cursor: 'default' } : {};
 
   return (
     <Button
@@ -34,6 +39,7 @@ function UnitButton({
       variant="link"
       onClick={handleClick}
       title={title}
+      style={css}
     >
       <UnitIcon type={forceLock ? 'lock' : contentType} />
       {showTitle && <span className="unit-title">{title}</span>}
@@ -49,6 +55,7 @@ function UnitButton({
 }
 
 UnitButton.propTypes = {
+  disableUnitsAfterCompletion: PropTypes.bool,
   bookmarked: PropTypes.bool,
   className: PropTypes.string,
   complete: PropTypes.bool,
@@ -63,6 +70,7 @@ UnitButton.propTypes = {
 };
 
 UnitButton.defaultProps = {
+  disableUnitsAfterCompletion: false,
   className: undefined,
   isActive: false,
   bookmarked: false,

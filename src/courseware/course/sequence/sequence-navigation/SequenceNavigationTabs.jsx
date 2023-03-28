@@ -7,7 +7,7 @@ import SequenceNavigationDropdown from './SequenceNavigationDropdown';
 import useIndexOfLastVisibleChild from '../../../../generic/tabs/useIndexOfLastVisibleChild';
 
 function SequenceNavigationTabs({
-  unitIds, unitId, showCompletion, onNavigate, units, unitsSequentialCompletion,
+  disableUnitsAfterCompletion, unitIds, unitId, showCompletion, onNavigate, units, unitsSequentialCompletion,
 }) {
   const [
     indexOfLastVisibleChild,
@@ -17,6 +17,7 @@ function SequenceNavigationTabs({
   const shouldDisplayDropdown = indexOfLastVisibleChild === -1;
 
   const unitCompletion = {};
+
   if (unitsSequentialCompletion && units) {
     const unitsArr = Object.values(units);
     unitIds.forEach((uId, i) => {
@@ -37,6 +38,7 @@ function SequenceNavigationTabs({
         >
           {unitIds.map((buttonUnitId, i) => (
             <UnitButton
+              disableUnitsAfterCompletion={disableUnitsAfterCompletion}
               key={buttonUnitId}
               unitId={buttonUnitId}
               isActive={unitId === buttonUnitId}
@@ -65,10 +67,13 @@ SequenceNavigationTabs.propTypes = {
   showCompletion: PropTypes.bool.isRequired,
   unitIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   unitsSequentialCompletion: PropTypes.bool,
-  units: PropTypes.arrayOf(PropTypes.object),
+  disableUnitsAfterCompletion: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  units: PropTypes.object,
 };
 
 SequenceNavigationTabs.defaultProps = {
+  disableUnitsAfterCompletion: false,
   units: undefined,
   unitsSequentialCompletion: false,
 };

@@ -9,7 +9,7 @@ import { Button } from '@edx/paragon';
 import messages from './messages';
 
 function ContentLock({
-  btnTitle, intl, courseId, prereqSectionName, prereqId, sequenceTitle,
+  btnTitle, lockMsg, intl, courseId, prereqSectionName, prereqId, sequenceTitle,
 }) {
   const handleClick = useCallback(() => {
     history.push(`/course/${courseId}/${prereqId}`);
@@ -20,31 +20,44 @@ function ContentLock({
       <h3>
         <FontAwesomeIcon icon={faLock} />
         {' '}
-        {sequenceTitle}
+        {sequenceTitle && <>{sequenceTitle}</>}
       </h3>
-      <h4>{intl.formatMessage(messages['learn.contentLock.content.locked'])}</h4>
-      <p>
-        {intl.formatMessage(messages['learn.contentLock.complete.prerequisite'], {
-          prereqSectionName,
-        })}
-      </p>
+      {!lockMsg && (
+      <><h4>{intl.formatMessage(messages['learn.contentLock.content.locked'])}</h4>
+        {prereqSectionName && (
+        <p>
+          {intl.formatMessage(messages['learn.contentLock.complete.prerequisite'], {
+            prereqSectionName,
+          })}
+        </p>
+        )}
+      </>
+      )}
+      {lockMsg && <><br /><p>{lockMsg}</p></>}
+      {prereqId && (
       <p>
         <Button variant="primary" onClick={handleClick}>{btnTitle || intl.formatMessage(messages['learn.contentLock.goToSection'])}</Button>
       </p>
+      )}
     </>
   );
 }
 
 ContentLock.defaultProps = {
   btnTitle: undefined,
+  lockMsg: undefined,
+  sequenceTitle: null,
+  prereqId: undefined,
+  prereqSectionName: null,
 };
 
 ContentLock.propTypes = {
   btnTitle: PropTypes.string,
+  lockMsg: PropTypes.string,
   intl: intlShape.isRequired,
   courseId: PropTypes.string.isRequired,
-  prereqSectionName: PropTypes.string.isRequired,
-  prereqId: PropTypes.string.isRequired,
-  sequenceTitle: PropTypes.string.isRequired,
+  prereqSectionName: PropTypes.string,
+  prereqId: PropTypes.string,
+  sequenceTitle: PropTypes.string,
 };
 export default injectIntl(ContentLock);

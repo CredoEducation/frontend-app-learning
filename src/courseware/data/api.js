@@ -163,6 +163,7 @@ function normalizeSequenceMetadata(sequence) {
       allowProctoringOptOut: sequence.allow_proctoring_opt_out,
       userMustFillAdditionalProfileFields: sequence.user_must_fill_additional_profile_fields,
       unitsSequentialCompletion: sequence.units_sequential_completion,
+      disableUnitsAfterCompletion: sequence.disable_units_after_completion,
       userEmail: sequence.user_email,
       showSummaryInfoAfterQuiz: sequence.show_summary_info_after_quiz,
       profileFieldsUrl: sequence.profile_fields_url,
