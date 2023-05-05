@@ -43,7 +43,7 @@ class SiteFooter extends React.Component {
     return (
       <footer
         role="contentinfo"
-        className="footer d-flex border-top py-3 px-4"
+        className="footer d-flex border-top footer-block"
       >
         <div className="colophon">
           <nav className="nav-colophon">
