@@ -19,7 +19,7 @@ const CourseTabsNavigation = ({
           <a
             key={slug}
             className={classNames('nav-item flex-shrink-0 nav-link', { active: slug === activeTabSlug })}
-            href={url}
+            href={slug === activeTabSlug ? '#' : url}
           >
             {title}
           </a>

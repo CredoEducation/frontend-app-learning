@@ -55,8 +55,10 @@ const SequenceNavigation = ({
     }
     return (
       <SequenceNavigationTabs
+        disableUnitsAfterCompletion={sequence.disableUnitsAfterCompletion}
         unitIds={sequence.unitIds}
         unitId={unitId}
+        unitsSequentialCompletion={sequence.unitsSequentialCompletion}
         showCompletion={sequence.showCompletion}
         onNavigate={onNavigate}
       />

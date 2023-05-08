@@ -19,6 +19,7 @@ const PrivateCourseAlert = ({ intl, payload }) => {
     anonymousUser,
     canEnroll,
     courseId,
+    userMustBeActive,
   } = payload;
 
   const {
@@ -45,6 +46,7 @@ const PrivateCourseAlert = ({ intl, payload }) => {
     </Button>
   );
 
+  const disableRegister = getConfig().DISABLE_REGISTER;
   const register = (
     <Hyperlink
       style={{ textDecoration: 'underline' }}
@@ -70,6 +72,7 @@ const PrivateCourseAlert = ({ intl, payload }) => {
           <p className="font-weight-bold">
             {intl.formatMessage(enrollmentMessages.alert)}
           </p>
+          {!disableRegister && (
           <FormattedMessage
             id="learning.privateCourse.signInOrRegister"
             description="Prompts the user to sign in or register to see course content."
@@ -79,6 +82,17 @@ const PrivateCourseAlert = ({ intl, payload }) => {
               register,
             }}
           />
+          )}
+          {disableRegister && (
+          <FormattedMessage
+            id="learning.privateCourse.signInOrRegister"
+            description="Prompts the user to sign in to see course content."
+            defaultMessage="{signIn} and then enroll in this course."
+            values={{
+              signIn,
+            }}
+          />
+          )}
         </>
       )}
       {!anonymousUser && (
@@ -93,7 +107,7 @@ const PrivateCourseAlert = ({ intl, payload }) => {
           )}
           {!canEnroll && (
             <>
-              {intl.formatMessage(enrollmentMessages.alert)}
+              {userMustBeActive ? 'Please, activate you account' : intl.formatMessage(enrollmentMessages.alert)}
             </>
           )}
         </>
@@ -107,6 +121,7 @@ PrivateCourseAlert.propTypes = {
   payload: PropTypes.shape({
     anonymousUser: PropTypes.bool,
     canEnroll: PropTypes.bool,
+    userMustBeActive: PropTypes.bool,
     courseId: PropTypes.string,
   }).isRequired,
 };

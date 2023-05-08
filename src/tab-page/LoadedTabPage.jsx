@@ -26,6 +26,8 @@ const LoadedTabPage = ({
     celebrations,
     org,
     originalUserIsStaff,
+    showNwHelp,
+    studioStaffAccess,
     tabs,
     title,
     verifiedMode,
@@ -52,11 +54,14 @@ const LoadedTabPage = ({
       />
       <Helmet>
         <title>{`${activeTab ? `${activeTab.title} | ` : ''}${title} | ${getConfig().SITE_NAME}`}</title>
+        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
       </Helmet>
       {originalUserIsStaff && (
         <InstructorToolbar
           courseId={courseId}
           unitId={unitId}
+          showNwHelp={showNwHelp}
+          studioStaffAccess={studioStaffAccess}
           tab={activeTabSlug}
         />
       )}

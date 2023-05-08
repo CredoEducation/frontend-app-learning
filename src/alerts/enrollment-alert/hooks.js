@@ -13,6 +13,7 @@ export function useEnrollmentAlert(courseId) {
   const { authenticatedUser } = useContext(AppContext);
   const course = useModel('courseHomeMeta', courseId);
   const outline = useModel('outline', courseId);
+  const { userMustBeActive } = course;
   const enrolledUser = course && course.isEnrolled !== undefined && course.isEnrolled;
   const privateOutline = outline && outline.courseBlocks && !outline.courseBlocks.courses;
   /**
@@ -22,12 +23,20 @@ export function useEnrollmentAlert(courseId) {
    *    3. the course is private.
    */
   const isVisible = !enrolledUser && authenticatedUser !== null && privateOutline;
-  const payload = useMemo(() => ({
-    canEnroll: outline && outline.enrollAlert ? outline.enrollAlert.canEnroll : false,
-    courseId,
-    extraText: outline && outline.enrollAlert ? outline.enrollAlert.extraText : '',
-    isStaff: course && course.isStaff,
-  }), [course, courseId, outline]);
+  const payload = useMemo(() => {
+    const data = {
+      canEnroll: outline && outline.enrollAlert ? outline.enrollAlert.canEnroll : false,
+      courseId,
+      extraText: outline && outline.enrollAlert ? outline.enrollAlert.extraText : '',
+      isStaff: course && course.isStaff,
+    };
+    if (userMustBeActive) {
+      data.canEnroll = false;
+      data.userMustBeActive = true;
+    }
+
+    return data;
+  }, [course, courseId, outline, userMustBeActive]);
 
   useAlert(isVisible, {
     code: 'clientEnrollmentAlert',

@@ -26,6 +26,7 @@ import { CourseExit } from './courseware/course/course-exit';
 import CoursewareContainer from './courseware';
 import CoursewareRedirectLandingPage from './courseware/CoursewareRedirectLandingPage';
 import DatesTab from './course-home/dates-tab';
+import PageNotFound from './custom/page-not-found';
 import GoalUnsubscribe from './course-home/goal-unsubscribe';
 import ProgressTab from './course-home/progress-tab/ProgressTab';
 import { TabContainer } from './tab-page';
@@ -100,6 +101,7 @@ subscribe(APP_READY, () => {
                 ]}
                 component={CoursewareContainer}
               />
+              <PageRoute component={PageNotFound} />
             </Switch>
           </UserMessagesProvider>
         </NoticesProvider>
@@ -110,6 +112,7 @@ subscribe(APP_READY, () => {
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
+  console.log('Error: ', error);
   ReactDOM.render(<ErrorPage message={error.message} />, document.getElementById('root'));
 });
 
@@ -139,7 +142,49 @@ initialize({
         EXAMS_BASE_URL: process.env.EXAMS_BASE_URL || null,
         PROCTORED_EXAM_FAQ_URL: process.env.PROCTORED_EXAM_FAQ_URL || null,
         PROCTORED_EXAM_RULES_URL: process.env.PROCTORED_EXAM_RULES_URL || null,
+        FOOTER_LINKS: process.env.FOOTER_LINKS || null,
+        NW_HELP_URL: process.env.NW_HELP_URL || null,
+        DISABLE_REGISTER: process.env.DISABLE_REGISTER || false,
       }, 'LearnerAppConfig');
+      const { hostname } = global.location;
+      if (hostname.indexOf('credocourseware') !== -1) {
+        mergeConfig({
+          BASE_URL: process.env.CREDO_BASE_URL || process.env.BASE_URL || null,
+          CONTACT_URL: process.env.CREDO_CONTACT_URL || process.env.CONTACT_URL || null,
+          FAVICON_URL: process.env.CREDO_FAVICON_URL || process.env.FAVICON_URL || null,
+          // eslint-disable-next-line max-len
+          LMS_BASE_URL: hostname.indexOf('frame') !== -1 ? process.env.CREDO_FRAME_LMS_BASE_URL : (process.env.CREDO_LMS_BASE_URL || process.env.LMS_BASE_URL),
+          LOGIN_URL: process.env.CREDO_LOGIN_URL || process.env.LOGIN_URL || null,
+          LOGOUT_URL: process.env.CREDO_LOGOUT_URL || process.env.LOGOUT_URL || null,
+          LOGO_URL: process.env.CREDO_LOGO_URL || process.env.LOGO_URL || null,
+          // eslint-disable-next-line max-len
+          MARKETING_SITE_BASE_URL: process.env.CREDO_MARKETING_SITE_BASE_URL || process.env.MARKETING_SITE_BASE_URL || null,
+          // eslint-disable-next-line max-len
+          REFRESH_ACCESS_TOKEN_ENDPOINT: process.env.CREDO_REFRESH_ACCESS_TOKEN_ENDPOINT || process.env.REFRESH_ACCESS_TOKEN_ENDPOINT || null,
+          SITE_NAME: process.env.CREDO_SITE_NAME || process.env.SITE_NAME || null,
+          STUDIO_BASE_URL: process.env.CREDO_STUDIO_BASE_URL || process.env.STUDIO_BASE_URL || null,
+          SESSION_COOKIE_DOMAIN: process.env.CREDO_SESSION_COOKIE_DOMAIN || process.env.SESSION_COOKIE_DOMAIN || null,
+          FOOTER_LINKS: process.env.CREDO_FOOTER_LINKS || process.env.FOOTER_LINKS || null,
+        }, 'LearnerAppConfig');
+      }
+      if (hostname.indexOf('weaveeducation') !== -1) {
+        mergeConfig({
+          BASE_URL: process.env.WEAVE_BASE_URL || process.env.BASE_URL || null,
+          FAVICON_URL: process.env.WEAVE_FAVICON_URL || process.env.FAVICON_URL || null,
+          // eslint-disable-next-line max-len
+          LMS_BASE_URL: process.env.WEAVE_LMS_BASE_URL || process.env.LMS_BASE_URL,
+          LOGIN_URL: process.env.WEAVE_LOGIN_URL || process.env.LOGIN_URL || null,
+          LOGOUT_URL: process.env.WEAVE_LOGOUT_URL || process.env.LOGOUT_URL || null,
+          LOGO_URL: process.env.WEAVE_LOGO_URL || process.env.LOGO_URL || null,
+          // eslint-disable-next-line max-len
+          MARKETING_SITE_BASE_URL: process.env.WEAVE_MARKETING_SITE_BASE_URL || process.env.MARKETING_SITE_BASE_URL || null,
+          // eslint-disable-next-line max-len
+          REFRESH_ACCESS_TOKEN_ENDPOINT: process.env.WEAVE_REFRESH_ACCESS_TOKEN_ENDPOINT || process.env.REFRESH_ACCESS_TOKEN_ENDPOINT || null,
+          SITE_NAME: process.env.WEAVE_SITE_NAME || process.env.SITE_NAME || null,
+          STUDIO_BASE_URL: process.env.WEAVE_STUDIO_BASE_URL || process.env.STUDIO_BASE_URL || null,
+          SESSION_COOKIE_DOMAIN: process.env.WEAVE_SESSION_COOKIE_DOMAIN || process.env.SESSION_COOKIE_DOMAIN || null,
+        }, 'LearnerAppConfig');
+      }
     },
   },
   messages: [

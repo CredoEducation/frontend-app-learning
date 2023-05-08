@@ -26,6 +26,11 @@ import HiddenAfterDue from './hidden-after-due';
 import { SequenceNavigation, UnitNavigation } from './sequence-navigation';
 import SequenceContent from './SequenceContent';
 
+import { BadgesModal } from '../../../custom/badges/modal';
+import { useBadgesModalProps } from '../../../custom/badges/utils';
+import { ScoresModal } from '../../../custom/scores/modal';
+import { useScoresModalProps } from '../../../custom/scores/utils';
+
 const Sequence = ({
   unitId,
   sequenceId,
@@ -35,6 +40,10 @@ const Sequence = ({
   previousSequenceHandler,
   intl,
 }) => {
+  const {
+    badgesModalIsOpen, closeBadgesModalFn, badgeLoadingStatus, badgeData,
+  } = useBadgesModalProps();
+
   const course = useModel('coursewareMeta', courseId);
   const {
     isStaff,
@@ -45,6 +54,12 @@ const Sequence = ({
   const sequenceStatus = useSelector(state => state.courseware.sequenceStatus);
   const sequenceMightBeUnit = useSelector(state => state.courseware.sequenceMightBeUnit);
   const shouldDisplayNotificationTriggerInSequence = useWindowSize().width < breakpoints.small.minWidth;
+
+  const {
+    scoresPanelDisplay, displayScoresModalWindowFn, scoresModalIsOpen, closeScoresModalFn,
+    scoresLoadingStatus, scoresData, userEmail, emailSendingStatus, emailSendingError,
+    userEmailChangeFn, sendScoresEmailFn,
+  } = useScoresModalProps(courseId, sequenceId, sequence);
 
   const handleNext = () => {
     const nextIndex = sequence.unitIds.indexOf(unitId) + 1;
@@ -205,9 +220,47 @@ const Sequence = ({
           originalUserIsStaff={originalUserIsStaff}
           canAccessProctoredExams={course.canAccessProctoredExams}
         >
+          {scoresPanelDisplay && (
+          <div className="scores-panel">
+            <div className="container-fluid py-3 d-md-flex justify-content-end align-items-start">
+              <div className="align-items-center flex-grow-1 d-md-flex mx-1 my-1">
+                <div className="flex-grow-1">
+                  <div className="row">
+                    <span className="col-auto col-form-label pl-3">Click here to see details and email your score:</span>
+                    <a
+                      className="btn btn-inverse-outline-primary"
+                      href="#"
+                      onClick={displayScoresModalWindowFn}
+                    >Get Scores
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
           {defaultContent}
         </SequenceExamWrapper>
         <CourseLicense license={course.license || undefined} />
+        {badgesModalIsOpen && (
+        <BadgesModal
+          onClose={closeBadgesModalFn}
+          badgeLoadingStatus={badgeLoadingStatus}
+          data={badgeData}
+        />
+        )}
+        {scoresModalIsOpen && (
+        <ScoresModal
+          onClose={closeScoresModalFn}
+          scoresLoadingStatus={scoresLoadingStatus}
+          data={scoresData}
+          userEmail={userEmail}
+          emailSendingStatus={emailSendingStatus}
+          emailSendingError={emailSendingError}
+          userEmailChangeFn={userEmailChangeFn}
+          sendScoresEmailFn={sendScoresEmailFn}
+        />
+        )}
       </div>
     );
   }

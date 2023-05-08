@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import { processEvent } from '../../../course-home/data/thunks';
+import { isBrokenProxyUsage } from '../../../utils';
 import { useEventListener } from '../../../generic/hooks';
 import { useModel } from '../../../generic/model-store';
 import PageLoading from '../../../generic/PageLoading';
@@ -82,10 +83,15 @@ const Unit = ({
   intl,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
+  const credoAnonUser = authenticatedUser.email.endsWith('@credomodules.com');
+  const hideBookmarkButton = authenticatedUser && credoAnonUser;
   const view = authenticatedUser ? 'student_view' : 'public_view';
   let iframeUrl = `${getConfig().LMS_BASE_URL}/xblock/${id}?show_title=0&show_bookmark_button=0&recheck_access=1&view=${view}`;
   if (format) {
     iframeUrl += `&format=${format}`;
+  }
+  if (isBrokenProxyUsage() && credoAnonUser) {
+    iframeUrl += `&email=${authenticatedUser.email}`;
   }
 
   const [iframeHeight, setIframeHeight] = useState(0);
@@ -144,11 +150,13 @@ const Unit = ({
     <div className="unit">
       <h1 className="mb-0 h3">{unit.title}</h1>
       <h2 className="sr-only">{intl.formatMessage(messages.headerPlaceholder)}</h2>
+      {!hideBookmarkButton && (
       <BookmarkButton
         unitId={unit.id}
         isBookmarked={unit.bookmarked}
         isProcessing={unit.bookmarkedUpdateState === 'loading'}
       />
+      )}
       {/* TODO: social share exp. Need to remove later */}
       {(window.expSocialShareAboutUrls && window.expSocialShareAboutUrls[unit.id] !== undefined) && (
         <ShareButton url={window.expSocialShareAboutUrls[unit.id]} />

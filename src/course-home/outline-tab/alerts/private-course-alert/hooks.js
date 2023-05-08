@@ -10,6 +10,7 @@ export function usePrivateCourseAlert(courseId) {
   const { authenticatedUser } = useContext(AppContext);
   const course = useModel('courseHomeMeta', courseId);
   const outline = useModel('outline', courseId);
+  const { userMustBeActive } = course;
   const enrolledUser = course && course.isEnrolled !== undefined && course.isEnrolled;
   const privateOutline = outline && outline.courseBlocks && !outline.courseBlocks.courses;
   /**
@@ -18,11 +19,18 @@ export function usePrivateCourseAlert(courseId) {
    *    2. the user is authenticated.
    * */
   const isVisible = !enrolledUser && (privateOutline || authenticatedUser !== null);
-  const payload = useMemo(() => ({
-    anonymousUser: authenticatedUser === null,
-    canEnroll: outline && outline.enrollAlert ? outline.enrollAlert.canEnroll : false,
-    courseId,
-  }), [authenticatedUser, courseId, outline]);
+  const payload = useMemo(() => {
+    const data = {
+      anonymousUser: authenticatedUser === null,
+      canEnroll: outline && outline.enrollAlert ? outline.enrollAlert.canEnroll : false,
+      courseId,
+    };
+    if (userMustBeActive) {
+      data.canEnroll = false;
+      data.userMustBeActive = true;
+    }
+    return data;
+  }, [authenticatedUser, courseId, outline, userMustBeActive]);
 
   useAlert(isVisible, {
     code: 'clientPrivateCourseAlert',

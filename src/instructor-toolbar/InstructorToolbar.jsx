@@ -36,6 +36,14 @@ function getStudioUrl(courseId, unitId) {
   return urlFull;
 }
 
+function getHelpUrl() {
+  const url = getConfig().NW_HELP_URL;
+  if (url) {
+    return url;
+  }
+  return false;
+}
+
 const InstructorToolbar = (props) => {
   // This didMount logic became necessary once we had a page that does a redirect on a quick exit.
   // As a result, it unmounts the InstructorToolbar (which will be remounted by the new component),
@@ -55,11 +63,14 @@ const InstructorToolbar = (props) => {
   const {
     courseId,
     unitId,
+    showNwHelp,
+    studioStaffAccess,
     tab,
   } = props;
 
   const urlInsights = getInsightsUrl(courseId);
   const urlStudio = getStudioUrl(courseId, unitId);
+  const nwHelpUrl = getHelpUrl();
   const [masqueradeErrorMessage, showMasqueradeError] = useState(null);
 
   const accessExpirationMasqueradeBanner = useAccessExpirationMasqueradeBanner(courseId, tab);
@@ -72,20 +83,19 @@ const InstructorToolbar = (props) => {
           <div className="align-items-center flex-grow-1 d-md-flex mx-1 my-1">
             <MasqueradeWidget courseId={courseId} onError={showMasqueradeError} />
           </div>
-          {(urlStudio || urlInsights) && (
-            <>
-              <hr className="border-light" />
-              <span className="mr-2 mt-1 col-form-label">View course in:</span>
-            </>
-          )}
-          {urlStudio && (
+          {(studioStaffAccess && urlStudio) && (
             <span className="mx-1 my-1">
-              <a className="btn btn-inverse-outline-primary" href={urlStudio}>Studio</a>
+              <a className="btn btn-inverse-outline-primary" href={urlStudio}>View in Studio</a>
             </span>
           )}
           {urlInsights && (
             <span className="mx-1 my-1">
               <a className="btn btn-inverse-outline-primary" href={urlInsights}>Insights</a>
+            </span>
+          )}
+          {(showNwHelp && nwHelpUrl) && (
+            <span className="mx-1 my-1">
+              <a className="btn btn-inverse-outline-primary" href={nwHelpUrl} target="_blank" rel="noreferrer">Help Center</a>
             </span>
           )}
         </div>
@@ -114,12 +124,16 @@ const InstructorToolbar = (props) => {
 InstructorToolbar.propTypes = {
   courseId: PropTypes.string,
   unitId: PropTypes.string,
+  showNwHelp: PropTypes.bool,
+  studioStaffAccess: PropTypes.bool,
   tab: PropTypes.string,
 };
 
 InstructorToolbar.defaultProps = {
   courseId: undefined,
   unitId: undefined,
+  showNwHelp: true,
+  studioStaffAccess: true,
   tab: '',
 };
 

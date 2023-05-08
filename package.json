@@ -1,10 +1,10 @@
 {
   "name": "@edx/frontend-app-learning",
   "version": "1.0.0-semantically-released",
-  "description": "Frontend learning application.",
+  "description": "Fork of the openEdx frontend-app-learning project.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openedx/frontend-app-learning.git"
+    "url": "git+https://github.com/weaveeducation/frontend-app-learning.git"
   },
   "browserslist": [
     "extends @edx/browserslist-config"
@@ -16,24 +16,24 @@
     "lint:fix": "fedx-scripts eslint --fix --ext .js --ext .jsx .",
     "prepare": "husky install",
     "snapshot": "fedx-scripts jest --updateSnapshot",
-    "start": "fedx-scripts webpack-dev-server --progress",
+    "start": "fedx-scripts webpack-dev-server --progress --allowed-hosts all",
     "test": "fedx-scripts jest --coverage --passWithNoTests"
   },
   "author": "edX",
   "license": "AGPL-3.0",
-  "homepage": "https://github.com/openedx/frontend-app-learning#readme",
+  "homepage": "https://github.com/weaveeducation/frontend-app-learning#readme",
   "publishConfig": {
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/openedx/frontend-app-learning/issues"
+    "url": "https://github.com/weaveeducation/frontend-app-learning/issues"
   },
   "dependencies": {
     "@edx/brand": "npm:@edx/brand-openedx@1.2.0",
     "@edx/frontend-component-footer": "^12.0.0",
     "@edx/frontend-component-header": "^4.0.0",
     "@edx/frontend-lib-special-exams": "^2.16.1",
-    "@edx/frontend-platform": "^4.2.0",
+    "@edx/frontend-platform": "file:../frontend-platform/packages/edx-frontend-platform-1.0.7.tgz",
     "@edx/paragon": "20.28.4",
     "@fortawesome/fontawesome-svg-core": "1.3.0",
     "@fortawesome/free-brands-svg-icons": "5.15.4",
