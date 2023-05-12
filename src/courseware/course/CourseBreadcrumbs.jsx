@@ -41,6 +41,7 @@ const CourseBreadcrumb = ({
             <SelectMenu isLink defaultMessage={defaultContent.label}>
               {content.map(item => (
                 <JumpNavMenuItem
+                  key={sequenceId}
                   isDefault={item.default}
                   sequences={item.sequences}
                   courseId={courseId}
@@ -138,8 +139,9 @@ const CourseBreadcrumbs = ({
             />
           </Link>
         </li>
-        {links.map(content => (
+        {links.map((content, i) => (
           <CourseBreadcrumb
+            key={i === 0 ? 'chapters' : ' seq'}
             courseId={courseId}
             sequenceId={sequenceId}
             content={content}

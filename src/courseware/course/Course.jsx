@@ -109,12 +109,14 @@ const Course = ({
         isOpen={firstSectionCelebrationOpen}
         onClose={() => setFirstSectionCelebrationOpen(false)}
       />
+      {daysPerWeek && (
       <WeeklyGoalCelebrationModal
         courseId={courseId}
         daysPerWeek={daysPerWeek}
         isOpen={weeklyGoalCelebrationOpen}
         onClose={() => setWeeklyGoalCelebrationOpen(false)}
       />
+      )}
       <ContentTools course={course} />
     </SidebarProvider>
   );

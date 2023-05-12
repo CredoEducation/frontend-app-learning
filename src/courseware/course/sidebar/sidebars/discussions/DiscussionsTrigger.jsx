@@ -24,17 +24,19 @@ const DiscussionsTrigger = ({
   } = useContext(SidebarContext);
   const dispatch = useDispatch();
   const topic = useModel('discussionTopics', unitId);
+  const courseMeta = useModel('coursewareMeta', courseId);
   const baseUrl = getConfig().DISCUSSIONS_MFE_BASE_URL;
+  const { discussionEnabled } = courseMeta;
 
   useEffect(() => {
     // Only fetch the topic data if the MFE is configured.
-    if (baseUrl) {
+    if (baseUrl && discussionEnabled) {
       dispatch(getCourseDiscussionTopics(courseId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [courseId, baseUrl]);
+  }, [courseId, baseUrl, discussionEnabled]);
 
-  if (!topic?.id || !topic?.enabledInContext) {
+  if (!topic?.id || !topic?.enabledInContext || !courseMeta.discussionEnabled) {
     return null;
   }
 
