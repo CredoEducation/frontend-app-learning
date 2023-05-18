@@ -367,3 +367,8 @@
     padding-top: 15px;
   }
 }
+
+.pgn__menu-select-popup {
+  // Somehow without this fix submenu in course breadcrumbs disappears (on breadcrumb item click)
+  position: unset !important;
+}
