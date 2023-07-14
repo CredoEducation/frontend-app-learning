@@ -81,7 +81,7 @@ UnitButton.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-  if (props.unitId) {
+  if (props.unitId && state.models.units) {
     return {
       ...state.models.units[props.unitId],
     };
